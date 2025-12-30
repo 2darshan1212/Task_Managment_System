@@ -19,7 +19,14 @@ const TaskForm = ({ task, onSuccess, onCancel }) => {
             setDueDate(task.dueDate?.split('T')[0] || '');
             setPriority(task.priority);
             setAssignedTo(task.assignedTo?._id || '');
+        } else {
+            setTitle('');
+            setDescription('');
+            setDueDate('');
+            setPriority('medium');
+            setAssignedTo('');
         }
+        setError('');
     }, [task]);
 
     const fetchUsers = async () => {
@@ -47,7 +54,6 @@ const TaskForm = ({ task, onSuccess, onCancel }) => {
             onSuccess();
         } catch (err) {
             setError(err.response?.data?.message || 'Something went wrong');
-        } finally {
             setLoading(false);
         }
     };

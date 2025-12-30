@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import api from '../api';
 import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
@@ -18,9 +18,16 @@ const Login = () => {
         setLoading(true);
 
         try {
-            const res = await axios.post('/api/auth/login', { email, password });
-            login(res.data.user, res.data.token);
-            navigate('/dashboard');
+            const res = await api.post('/auth/login', { email, password });
+            const userData = {
+                id: res.data.user._id || res.data.user.id,
+                _id: res.data.user._id || res.data.user.id,
+                name: res.data.user.name,
+                email: res.data.user.email,
+                role: res.data.user.role
+            };
+            login(userData, res.data.token);
+            navigate('/');
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed');
         } finally {
@@ -55,6 +62,9 @@ const Login = () => {
                     {loading ? 'Logging in...' : 'Login'}
                 </button>
             </form>
+            <p>
+                Don't have an account? <Link to="/register">Register</Link>
+            </p>
         </div>
     );
 };

@@ -5,7 +5,12 @@ import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
 import Tasks from './pages/Tasks';
+import TaskDetails from './pages/TaskDetails';
+import EditTask from './pages/EditTask';
+import UserManagement from './pages/UserManagement';
+import Profile from './pages/Profile';
 
 const App = () => {
     const { user } = useAuth();
@@ -21,7 +26,7 @@ const App = () => {
                         path="/"
                         element={
                             <PrivateRoute>
-                                {user?.role === 'admin' ? <Dashboard /> : <Tasks />}
+                                {user?.role === 'admin' ? <Dashboard /> : <Home />}
                             </PrivateRoute>
                         }
                     />
@@ -38,6 +43,38 @@ const App = () => {
                         element={
                             <PrivateRoute>
                                 <Tasks />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <PrivateRoute>
+                                <Profile />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/task/:id"
+                        element={
+                            <PrivateRoute>
+                                <TaskDetails />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/edit-task/:id"
+                        element={
+                            <PrivateRoute adminOnly>
+                                <EditTask />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/users"
+                        element={
+                            <PrivateRoute adminOnly>
+                                <UserManagement />
                             </PrivateRoute>
                         }
                     />
