@@ -5,17 +5,20 @@ const SocketContext = createContext(null);
 
 export const useSocket = () => useContext(SocketContext);
 
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+
 export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        console.log('SocketProvider: Initializing socket connection...');
+        console.log('SocketProvider: Initializing socket connection to', SOCKET_URL);
 
-        const newSocket = io('http://localhost:5000', {
+        const newSocket = io(SOCKET_URL, {
             transports: ['websocket', 'polling'],
             reconnection: true,
             reconnectionAttempts: 5,
-            reconnectionDelay: 1000
+            reconnectionDelay: 1000,
+            withCredentials: true
         });
 
         newSocket.on('connect', () => {
