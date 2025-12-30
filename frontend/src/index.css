@@ -466,13 +466,6 @@ form button:disabled {
     gap: 6px;
 }
 
-.task-card-actions .delete-btn::before {
-    content: '×';
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 1;
-}
-
 .task-card-actions .delete-btn:hover {
     background-color: #c0392b;
     transform: translateY(-1px);
@@ -577,13 +570,6 @@ td button,
     align-items: center;
     justify-content: center;
     gap: 6px;
-}
-
-.delete-btn::before {
-    content: '×';
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 1;
 }
 
 .delete-btn:hover {
